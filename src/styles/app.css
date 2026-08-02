@@ -14,7 +14,7 @@ body {
   margin: 0;
   font-family: var(--sa-font-sans);
   color: var(--sa-fg);
-  background: var(--sa-grey-200);
+  background: var(--sa-bg-subtle);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -45,20 +45,17 @@ a:hover {
   height: 100%;
   overflow: auto;
   display: flex;
-  justify-content: center;
-  padding: 40px;
 }
 
 .sv-frame {
   position: relative;
-  width: 1440px;
-  min-width: 1440px;
-  height: 900px;
-  flex-shrink: 0;
+  flex: 1;
+  min-width: 1180px;
+  height: 100%;
+  min-height: 680px;
   display: flex;
   background: var(--sa-bg-subtle);
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.14);
 }
 
 .sv-main {
@@ -101,7 +98,10 @@ a:hover {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 24px;
   padding: 16px;
+  overflow-y: auto;
+  scrollbar-width: thin;
 }
 
 .sv-nav-group {

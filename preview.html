@@ -5,10 +5,29 @@
     <title>Salmon Vision — live preview</title>
     <!-- Preview-only shim: runs the real src/ modules in the browser (Babel + blob modules).
          The shipped app is built by Vite from the same files — see index.html / package.json. -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-grid-layout@1.5.2/css/styles.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-resizable@3.0.5/css/styles.css" />
     <link rel="stylesheet" href="src/styles/tokens.css" />
     <link rel="stylesheet" href="src/styles/app.css" />
+    <style>
+      /* Inlined react-grid-layout + react-resizable CSS (the npm build imports
+         these from the packages in src/main.jsx). Inline here so the preview has
+         no cross-origin stylesheets. */
+      .react-grid-layout { position: relative; transition: height 200ms ease; }
+      .react-grid-item { transition: all 200ms ease; transition-property: left, top, width, height; }
+      .react-grid-item img { pointer-events: none; user-select: none; }
+      .react-grid-item.cssTransforms { transition-property: transform, width, height; }
+      .react-grid-item.resizing { transition: none; z-index: 1; will-change: width, height; }
+      .react-grid-item.react-draggable-dragging { transition: none; z-index: 3; will-change: transform; }
+      .react-grid-item.dropping { visibility: hidden; }
+      .react-grid-item.react-grid-placeholder { background: red; opacity: 0.2; transition-duration: 100ms; z-index: 2; user-select: none; }
+      .react-grid-item > .react-resizable-handle { position: absolute; width: 20px; height: 20px; }
+      .react-grid-item > .react-resizable-handle::after {
+        content: ""; position: absolute; right: 3px; bottom: 3px; width: 5px; height: 5px;
+        border-right: 2px solid rgba(0, 0, 0, 0.4); border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+      }
+      .react-resizable { position: relative; }
+      .react-resizable-hide > .react-resizable-handle { display: none; }
+      .react-grid-item > .react-resizable-handle.react-resizable-handle-se { bottom: 0; right: 0; cursor: se-resize; }
+    </style>
     <style>
       @font-face {
         font-family: "Inter";
@@ -34,6 +53,18 @@
   <body>
     <div id="root"></div>
     <script type="module">
+      const root = document.getElementById("root");
+      const fail = (message) => {
+        root.innerHTML =
+          '<div style="padding:40px;font:14px/1.6 system-ui;color:#364152">' +
+          "<strong>Preview could not load its CDN dependencies.</strong><br />" +
+          "Reload the page, or run the real app with <code>npm install &amp;&amp; npm run dev</code>.<br />" +
+          '<span style="color:#697586">' +
+          String(message) +
+          "</span></div>";
+      };
+      window.addEventListener("unhandledrejection", (e) => fail(e.reason && e.reason.message));
+
       const cache = new Map();
 
       async function load(url) {
@@ -65,13 +96,16 @@
         return task;
       }
 
-      const [React, { createRoot }, appModule] = await Promise.all([
+      const mods = await Promise.all([
         import("react"),
         import("react-dom/client"),
         load(new URL("src/App.jsx", location.href).href).then((u) => import(u))
-      ]);
+      ]).catch((e) => {
+        fail(e.message);
+        return null;
+      });
 
-      createRoot(document.getElementById("root")).render(React.createElement(appModule.default));
+      if (mods) mods[1].createRoot(root).render(mods[0].createElement(mods[2].default));
     </script>
   </body>
 </html>
