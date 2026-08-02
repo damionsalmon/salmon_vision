@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Salmon Vision — live preview</title>
+    <!-- Preview-only shim: runs the real src/ modules in the browser (Babel + blob modules).
+         The shipped app is built by Vite from the same files — see index.html / package.json. -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-grid-layout@1.5.2/css/styles.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-resizable@3.0.5/css/styles.css" />
+    <link rel="stylesheet" href="src/styles/tokens.css" />
+    <link rel="stylesheet" href="src/styles/app.css" />
+    <style>
+      @font-face {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: swap;
+        src: url("fonts/Inter-VariableFont_opsz_wght.ttf") format("truetype-variations");
+      }
+    </style>
+    <script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@18.3.1",
+          "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+          "react-dom": "https://esm.sh/react-dom@18.3.1?external=react",
+          "react-dom/client": "https://esm.sh/react-dom@18.3.1/client?external=react",
+          "react-grid-layout": "https://esm.sh/react-grid-layout@1.5.2?external=react,react-dom&bundle-deps"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module">
+      const cache = new Map();
+
+      async function load(url) {
+        if (cache.has(url)) return cache.get(url);
+        const task = (async () => {
+          const res = await fetch(url);
+          if (!res.ok) throw new Error("Cannot load " + url + " (" + res.status + ")");
+          const source = await res.text();
+          let code = Babel.transform(source, {
+            presets: [["react", { runtime: "classic" }]],
+            filename: url,
+            sourceType: "module"
+          }).code;
+
+          code = code.replace(/^\s*import\s+["'][^"']+\.css["'];?\s*$/gm, "");
+
+          const specifiers = new Set(
+            [...code.matchAll(/from\s+["'](\.[^"']+)["']/g)].map((m) => m[1])
+          );
+          for (const spec of specifiers) {
+            const child = await load(new URL(spec, url).href);
+            code = code.split('"' + spec + '"').join('"' + child + '"');
+            code = code.split("'" + spec + "'").join("'" + child + "'");
+          }
+
+          return URL.createObjectURL(new Blob([code], { type: "text/javascript" }));
+        })();
+        cache.set(url, task);
+        return task;
+      }
+
+      const [React, { createRoot }, appModule] = await Promise.all([
+        import("react"),
+        import("react-dom/client"),
+        load(new URL("src/App.jsx", location.href).href).then((u) => import(u))
+      ]);
+
+      createRoot(document.getElementById("root")).render(React.createElement(appModule.default));
+    </script>
+  </body>
+</html>

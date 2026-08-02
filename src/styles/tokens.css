@@ -1,0 +1,78 @@
+/* Salmon Design System — token subset used by this app.
+   Source of truth: Design System 0.0.2.fig / colors_and_type.css */
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/Inter-VariableFont_opsz_wght.ttf") format("truetype-variations");
+  font-variation-settings: "opsz" 16;
+}
+
+:root {
+  --sa-white: #ffffff;
+  --sa-black: #181a1e;
+
+  --sa-grey-25: #fcfcfd;
+  --sa-grey-50: #f8fafc;
+  --sa-grey-100: #eef2f6;
+  --sa-grey-200: #e3e8ef;
+  --sa-grey-300: #cdd5df;
+  --sa-grey-400: #9aa4b2;
+  --sa-grey-500: #697586;
+  --sa-grey-600: #4b5565;
+  --sa-grey-700: #364152;
+  --sa-grey-800: #202939;
+  --sa-grey-900: #121926;
+
+  --sa-primary-25: #f3eaf2;
+  --sa-primary-50: #e3cde5;
+  --sa-primary-100: #d2b0d8;
+  --sa-primary-500: #c767c0;
+  --sa-primary-600: #9e4aa2;
+  --sa-primary-700: #803a82;
+  --sa-primary-800: #602c63;
+
+  --sa-error-50: #fef3f2;
+  --sa-error-600: #d92d20;
+  --sa-error-700: #b42318;
+
+  --sa-success-600: #16aa65;
+  --sa-warning-600: #bf7c02;
+
+  --sa-bg: var(--sa-white);
+  --sa-bg-subtle: var(--sa-grey-25);
+  --sa-bg-muted: var(--sa-grey-100);
+  --sa-fg: var(--sa-black);
+  --sa-fg-secondary: var(--sa-grey-700);
+  --sa-fg-tertiary: var(--sa-grey-500);
+  --sa-fg-brand: var(--sa-primary-600);
+  --sa-border: #e9eaeb;
+  --sa-border-strong: var(--sa-grey-300);
+  --sa-divider: var(--sa-grey-200);
+
+  --sa-radius-xs: 4px;
+  --sa-radius-sm: 6px;
+  --sa-radius-md: 8px;
+  --sa-radius-lg: 10px;
+  --sa-radius-xl: 12px;
+  --sa-radius-2xl: 16px;
+  --sa-radius-full: 9999px;
+
+  --sa-shadow-xs: 0 1px 2px 0 rgba(10, 13, 18, 0.05);
+  --sa-shadow-sm: 0 1px 3px 0 rgba(10, 13, 18, 0.1), 0 1px 2px 0 rgba(10, 13, 18, 0.06);
+  --sa-shadow-lg: 0 12px 32px rgba(10, 13, 18, 0.18);
+
+  --sa-space-1: 4px;
+  --sa-space-2: 8px;
+  --sa-space-3: 12px;
+  --sa-space-4: 16px;
+  --sa-space-6: 24px;
+
+  --sa-font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  --sa-weight-regular: 400;
+  --sa-weight-medium: 500;
+  --sa-weight-semibold: 600;
+  --sa-weight-bold: 700;
+}
