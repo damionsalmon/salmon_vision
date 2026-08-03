@@ -1,46 +1,29 @@
 import React from "react";
 import Icon from "../ui/Icon.jsx";
 
-export default function EmptyState({ onAdd }) {
-  return (
-    <div style={{ flexGrow: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <div
-        style={{
-          position: "relative",
-          width: 512,
-          display: "flex",
-          flexDirection: "column",
-          gap: 24,
-          alignItems: "center"
-        }}
-      >
-        <svg
-          width="480"
-          height="480"
-          viewBox="0 0 480 480"
-          fill="none"
-          style={{ position: "absolute", left: 16, top: -152, pointerEvents: "none" }}
-          aria-hidden="true"
-        >
-          {[47.5, 79.5, 111.5, 143.5, 175.5, 207.5, 239.5].map((r, i) => (
-            <circle key={r} cx="240" cy="240" r={r} stroke={["#E9EAEB", "#E9EAEB", "#E9EAEB", "#E9EAEB", "#ECEDEE", "#F3F4F5", "#F8F9FA"][i]} />
-          ))}
-        </svg>
-        <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: 16, alignItems: "center" }}>
-          <Icon name="folderOpen" size={24} color="var(--sa-fg-secondary)" />
-          <div style={{ maxWidth: 352, display: "flex", flexDirection: "column", gap: 4, textAlign: "center" }}>
-            <span style={{ fontSize: 16, fontWeight: 600, lineHeight: "24px", color: "var(--sa-fg)" }}>
-              Add Widgets
-            </span>
-            <span style={{ fontSize: 14, lineHeight: "20px", color: "var(--sa-fg-secondary)" }}>
+export default function EmptyState({onAdd}) {
+    return (
+        <div className="empty-canvas flex items-center justify-center">
+            <div className="relative w-[512px] flex flex-col gap-6 items-center">
+
+                <img className="empty-canvas_bg" src="../../../assets/bg_dots.png" alt="Grided_Background"/>
+                <div className="empty-canvas_content absolute items-center flex flex-col gap-4">
+                    <div className="relative flex flex-col gap-4 items-center">
+                        <Icon name="folderOpen" size={24} color="var(--sa-fg-secondary)"/>
+                        <div className="max-w-[352px] flex flex-col gap-1 text-center">
+                            <span className="text-base font-semibold leading-6 text-black">Add Widgets</span>
+                            <span className="text-sm leading-5 text-grey-700">
               Click 'Add Widget' to start building your dashboards by adding Action, KPIs and Chart widgets!
             </span>
-          </div>
+                        </div>
+                    </div>
+                    <button type="button" className="sv-btn sv-btn--primary sv-btn--cta" onClick={onAdd}>
+                        Add Widgets
+                    </button>
+                </div>
+            </div>
+            <img className="empty-canvas_focus_graphics" src="../../../assets/focus_graphics_1.png" alt="Focus_graphics"/>
+
         </div>
-        <button type="button" className="sv-btn sv-btn--primary" style={{ height: 40, padding: "10px 18px" }} onClick={onAdd}>
-          Add Widgets
-        </button>
-      </div>
-    </div>
-  );
+    );
 }

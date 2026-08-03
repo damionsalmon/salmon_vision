@@ -4,7 +4,7 @@ import Icon from "../ui/Icon.jsx";
 export default function TopBar({ crumbs, onToggleNav, onOpenManage, actions }) {
   return (
     <header className="sv-header">
-      <button type="button" onClick={onToggleNav} title="Collapse navigation" style={{ display: "flex" }}>
+      <button type="button" onClick={onToggleNav} title="Collapse navigation" className="flex">
         <Icon name="menu" size={20} color="var(--sa-fg-secondary)" />
       </button>
 
@@ -13,7 +13,7 @@ export default function TopBar({ crumbs, onToggleNav, onOpenManage, actions }) {
           <React.Fragment key={crumb.label}>
             {i > 0 && <Icon name="chevronRight" size={14} color="var(--sa-fg-tertiary)" />}
             {crumb.onClick ? (
-              <button type="button" onClick={crumb.onClick} style={{ fontSize: 12, color: "var(--sa-fg-tertiary)" }}>
+              <button type="button" onClick={crumb.onClick} className="text-xs text-grey-500">
                 {crumb.label}
               </button>
             ) : (

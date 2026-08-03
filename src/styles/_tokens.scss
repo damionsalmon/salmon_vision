@@ -1,0 +1,129 @@
+// Salmon Design System — token subset used by this app.
+// Source of truth: Design System 0.0.2.fig / colors_and_type.css
+//
+// Single source of truth: edit the maps/variables below. Every consumer reads
+// the --sa-* custom properties emitted here — SCSS partials via var(), Tailwind
+// utilities via the @theme bridge in tailwind.css, and the handful of
+// CSS-custom-property-driven dynamic styles in the components.
+
+
+// Damion needs to add  Font Awesome locally, for now we will use icon.jsx
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/Inter-VariableFont_opsz_wght.ttf") format("truetype-variations");
+  font-variation-settings: "opsz" 16;
+}
+
+$sa-white: #ffffff;
+$sa-black: #181a1e;
+
+$sa-grey: (
+  25: #fcfcfd,
+  50: #f8fafc,
+  100: #eef2f6,
+  200: #e3e8ef,
+  300: #cdd5df,
+  400: #9aa4b2,
+  500: #697586,
+  600: #4b5565,
+  700: #364152,
+  800: #202939,
+  900: #121926,
+);
+
+$sa-primary: (
+  25: #f3eaf2,
+  50: #e3cde5,
+  100: #d2b0d8,
+  500: #c767c0,
+  600: #9e4aa2,
+  700: #803a82,
+  800: #602c63,
+);
+
+$sa-error: (
+  50: #fef3f2,
+  600: #d92d20,
+  700: #b42318,
+);
+
+// New — the Cash Position currency chip (previously hardcoded, no token backed it).
+$sa-info: (
+  50: #ebf5ff,
+  600: #2563eb,
+);
+
+$sa-success-600: #16aa65;
+$sa-warning-600: #bf7c02;
+
+:root {
+  --sa-white: #{$sa-white};
+  --sa-black: #{$sa-black};
+
+  @each $key, $value in $sa-grey {
+    --sa-grey-#{$key}: #{$value};
+  }
+  @each $key, $value in $sa-primary {
+    --sa-primary-#{$key}: #{$value};
+  }
+  @each $key, $value in $sa-error {
+    --sa-error-#{$key}: #{$value};
+  }
+  @each $key, $value in $sa-info {
+    --sa-info-#{$key}: #{$value};
+  }
+  --sa-success-600: #{$sa-success-600};
+  --sa-warning-600: #{$sa-warning-600};
+
+  --sa-bg: var(--sa-white);
+  --sa-bg-subtle: var(--sa-grey-25);
+  --sa-bg-muted: var(--sa-grey-100);
+  --sa-fg: var(--sa-black);
+  --sa-fg-secondary: var(--sa-grey-700);
+  --sa-fg-tertiary: var(--sa-grey-500);
+  --sa-fg-brand: var(--sa-primary-600);
+  --sa-border: #e9eaeb;
+  --sa-border-strong: var(--sa-grey-300);
+  --sa-divider: var(--sa-grey-200);
+
+  --sa-radius-xs: 4px;
+  --sa-radius-sm: 6px;
+  --sa-radius-md: 8px;
+  --sa-radius-lg: 10px;
+  --sa-radius-xl: 12px;
+  --sa-radius-2xl: 16px;
+  --sa-radius-full: 9999px;
+
+  --sa-shadow-xs: 0 1px 2px 0 rgba(10, 13, 18, 0.05);
+  --sa-shadow-sm: 0 1px 3px 0 rgba(10, 13, 18, 0.1), 0 1px 2px 0 rgba(10, 13, 18, 0.06);
+  --sa-shadow-lg: 0 12px 32px rgba(10, 13, 18, 0.18);
+  // Previously hardcoded inline in app.css with no token — named here, values unchanged.
+  --sa-shadow-surface: 0 -4px 3.8px 0 rgba(66, 32, 77, 0.1);
+  --sa-shadow-menu: 0 8px 24px rgba(10, 13, 18, 0.08);
+  --sa-shadow-drawer: -8px 0 24px rgba(10, 13, 18, 0.08);
+  // Note: distinct alpha (.1 vs .08) from --sa-shadow-drawer in the source app.css —
+  // kept separate rather than merged; only the Figma source should say if that's intentional.
+  --sa-shadow-panel-docked: -8px 0 24px rgba(10, 13, 18, 0.1);
+  --sa-shadow-fab: 0 8px 20px rgba(66, 32, 77, 0.28);
+
+  --sa-space-1: 4px;
+  --sa-space-2: 8px;
+  --sa-space-3: 12px;
+  --sa-space-4: 16px;
+  --sa-space-6: 24px;
+
+  // Previously four ad-hoc literals scattered across app.css/Sidebar.jsx/ManageDashboardsDrawer.jsx.
+  --sa-tracking-xs: 0.04em;
+  --sa-tracking-sm: 0.06em;
+  --sa-tracking-md: 0.08em;
+  --sa-tracking-lg: 0.5px;
+
+  --sa-font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  --sa-weight-regular: 400;
+  --sa-weight-medium: 500;
+  --sa-weight-semibold: 600;
+  --sa-weight-bold: 700;
+}

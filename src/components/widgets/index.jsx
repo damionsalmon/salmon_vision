@@ -55,13 +55,11 @@ function CurrentCashWidget({ view, seed = 0 }) {
 
   const drift = 1 + (seed % 7) / 1000;
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 12, justifyContent: "center", height: "100%" }}>
-      <span className="sv-num" style={{ fontSize: 32, fontWeight: 700, color: "var(--sa-fg)" }}>
-        {formatMoney(TOTAL_EUR * drift, "EUR")}
-      </span>
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+    <div className="flex flex-col gap-3 justify-center h-full">
+      <span className="sv-num text-[32px] font-bold text-black">{formatMoney(TOTAL_EUR * drift, "EUR")}</span>
+      <div className="flex items-center gap-2">
         <TrendPill value={2.3} />
-        <span style={{ fontSize: 12, color: "var(--sa-fg-tertiary)" }}>vs last 7 days</span>
+        <span className="text-xs text-grey-500">vs last 7 days</span>
       </div>
     </div>
   );
@@ -81,7 +79,7 @@ function CashOverTimeWidget({ view }) {
         <tbody>
           {CASH_SERIES.map((point) => (
             <tr key={point.day}>
-              <td style={{ color: "var(--sa-fg)" }}>{point.day}</td>
+              <td className="sv-table-cell--emphasis">{point.day}</td>
               <td className="sv-align-right sv-num">{formatMoney(point.value, "GBP")}</td>
             </tr>
           ))}
@@ -106,7 +104,7 @@ function BalanceByCurrencyWidget({ view }) {
         <tbody>
           {CURRENCY_TOTALS.map((row) => (
             <tr key={row.code}>
-              <td style={{ color: "var(--sa-fg)" }}>{row.code}</td>
+              <td className="sv-table-cell--emphasis">{row.code}</td>
               <td className="sv-align-right sv-num">{formatMoney(row.amount, row.code)}</td>
               <td className="sv-align-right sv-num">{formatMoney(row.eur, "EUR")}</td>
             </tr>
@@ -131,20 +129,8 @@ function BalanceByCurrencyWidget({ view }) {
 /** Types the source designs do not cover yet — rendered as an explicit gap, never invented. */
 function UndesignedWidget({ title }) {
   return (
-    <div
-      style={{
-        height: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 12,
-        borderRadius: "var(--sa-radius-md)",
-        border: "1px dashed var(--sa-border-strong)",
-        background: "var(--sa-bg-subtle)",
-        textAlign: "center"
-      }}
-    >
-      <span style={{ fontSize: 12, lineHeight: "18px", color: "var(--sa-fg-tertiary)" }}>
+    <div className="h-full flex items-center justify-center p-3 rounded-md border border-dashed border-[var(--sa-border-strong)] bg-grey-25 text-center">
+      <span className="text-xs leading-[18px] text-grey-500">
         Gap: no {title.toLowerCase()} body in the source designs.
       </span>
     </div>

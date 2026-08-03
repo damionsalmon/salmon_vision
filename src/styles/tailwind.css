@@ -1,0 +1,62 @@
+/* Tailwind v4 entry point + design-token bridge.
+   Deliberately plain CSS (not .scss) — Tailwind's own at-rules (@import "tailwindcss",
+   @theme) are processed by the Tailwind Vite plugin, a separate pipeline from Sass;
+   keeping this file plain CSS avoids Sass trying to interpret them.
+
+   Every value below is `var(--sa-*)`, i.e. a reference into src/styles/_tokens.scss —
+   that file stays the single source of truth; this file only maps our token names onto
+   the theme keys Tailwind's utility generator expects (bg-primary-600, rounded-xl, ...). */
+
+/* theme + utilities only — preflight is skipped since _base.scss already
+   carries our own element reset; importing both would just create two resets
+   fighting over the same properties. */
+@import "tailwindcss/theme.css";
+@import "tailwindcss/utilities.css";
+
+@theme {
+  --font-sans: var(--sa-font-sans);
+
+  --color-white: var(--sa-white);
+  --color-black: var(--sa-black);
+
+  --color-grey-25: var(--sa-grey-25);
+  --color-grey-50: var(--sa-grey-50);
+  --color-grey-100: var(--sa-grey-100);
+  --color-grey-200: var(--sa-grey-200);
+  --color-grey-300: var(--sa-grey-300);
+  --color-grey-400: var(--sa-grey-400);
+  --color-grey-500: var(--sa-grey-500);
+  --color-grey-600: var(--sa-grey-600);
+  --color-grey-700: var(--sa-grey-700);
+  --color-grey-800: var(--sa-grey-800);
+  --color-grey-900: var(--sa-grey-900);
+
+  --color-primary-25: var(--sa-primary-25);
+  --color-primary-50: var(--sa-primary-50);
+  --color-primary-100: var(--sa-primary-100);
+  --color-primary-500: var(--sa-primary-500);
+  --color-primary-600: var(--sa-primary-600);
+  --color-primary-700: var(--sa-primary-700);
+  --color-primary-800: var(--sa-primary-800);
+
+  --color-error-50: var(--sa-error-50);
+  --color-error-600: var(--sa-error-600);
+  --color-error-700: var(--sa-error-700);
+
+  --color-info-50: var(--sa-info-50);
+  --color-info-600: var(--sa-info-600);
+
+  --color-success-600: var(--sa-success-600);
+  --color-warning-600: var(--sa-warning-600);
+
+  --radius-xs: var(--sa-radius-xs);
+  --radius-sm: var(--sa-radius-sm);
+  --radius-md: var(--sa-radius-md);
+  --radius-lg: var(--sa-radius-lg);
+  --radius-xl: var(--sa-radius-xl);
+  --radius-2xl: var(--sa-radius-2xl);
+
+  --shadow-xs: var(--sa-shadow-xs);
+  --shadow-sm: var(--sa-shadow-sm);
+  --shadow-lg: var(--sa-shadow-lg);
+}

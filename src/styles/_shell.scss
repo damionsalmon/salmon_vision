@@ -1,0 +1,61 @@
+.sv-viewport {
+  height: 100%;
+  overflow: auto;
+  display: flex;
+}
+
+.sv-frame {
+  position: relative;
+  flex: 1;
+  min-width: 1180px;
+  height: 100%;
+  min-height: 680px;
+  display: flex;
+  background: var(--sa-bg-subtle);
+  overflow: hidden;
+}
+
+.sv-main {
+  position: relative;
+  flex-grow: 1;
+  align-self: stretch;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 20px 12px 0;
+}
+
+.sv-main--nav-collapsed {
+  padding-left: 20px;
+}
+
+.sv-surface {
+  position: relative;
+  flex-grow: 1;
+  align-self: stretch;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--sa-white);
+  box-shadow: var(--sa-shadow-surface);
+}
+
+.empty-canvas {
+  &_bg {
+    width: 40rem;
+  }
+
+  &_content {
+    top: 25%;
+  }
+  &_focus_graphics{
+    width: 40rem;
+    position: absolute;
+    bottom: -20rem;
+  }
+}

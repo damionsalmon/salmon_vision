@@ -1,0 +1,115 @@
+.sv-header {
+  height: 34px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  align-self: stretch;
+  flex-shrink: 0;
+}
+
+.sv-crumbs {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--sa-fg-tertiary);
+}
+
+.sv-crumbs__current {
+  font-weight: var(--sa-weight-medium);
+  color: var(--sa-fg-secondary);
+}
+
+.sv-btn {
+  height: 34px;
+  padding: 8px 12px;
+  border-radius: var(--sa-radius-md);
+  background: var(--sa-white);
+  box-shadow: inset 0 0 0 1px var(--sa-border-strong), var(--sa-shadow-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: var(--sa-weight-semibold);
+  color: var(--sa-fg-secondary);
+  white-space: nowrap;
+}
+
+.sv-btn:hover {
+  background: var(--sa-grey-50);
+}
+
+.sv-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.sv-btn:disabled:hover {
+  background: var(--sa-white);
+}
+
+.sv-btn--icon {
+  width: 38px;
+  padding: 0;
+}
+
+// One-off size variants — kept as SCSS modifiers rather than Tailwind
+// utilities because they override .sv-btn's own height/padding on the same
+// element; a Tailwind utility of equal specificity loaded before app.scss
+// would lose that fight.
+.sv-btn--cta {
+  height: 40px;
+  padding: 10px 18px;
+}
+
+.sv-btn--apply {
+  height: 37px;
+  padding: 10px 24px;
+}
+
+// Cash Position toolbar — overrides .sv-btn's own height/padding/font-weight,
+// so (per the rule above) these live as SCSS modifiers, not Tailwind utilities.
+.sv-btn--filter {
+  height: 27px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: var(--sa-weight-medium);
+}
+
+.sv-btn--icon-26 {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+}
+
+.sv-btn--icon-24 {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+}
+
+.sv-btn--primary {
+  background: var(--sa-primary-600);
+  color: var(--sa-white);
+  box-shadow: var(--sa-shadow-xs);
+}
+
+.sv-btn--primary:hover {
+  background: var(--sa-primary-700);
+}
+
+.sv-btn--primary:disabled:hover {
+  background: var(--sa-primary-600);
+}
+
+.sv-btn--danger {
+  background: var(--sa-error-600);
+  color: var(--sa-white);
+  box-shadow: var(--sa-shadow-xs);
+}
+
+.sv-btn--danger:hover {
+  background: var(--sa-error-700);
+}

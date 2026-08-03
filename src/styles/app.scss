@@ -1,0 +1,17 @@
+// Entry point — a thin manifest. Each `@use` below inlines that partial's
+// compiled CSS into this file's output, in the order listed.
+
+@use "tokens";
+@use "base";
+@use "shell";
+@use "sidebar";
+@use "header";
+@use "tabs";
+@use "canvas";
+@use "widget";
+@use "menu";
+@use "panels";
+@use "data";
+@use "cash-position";
+@use "animations";
+@use "utilities";

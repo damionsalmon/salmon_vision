@@ -1,0 +1,80 @@
+.sv-bar-track {
+  height: 8px;
+  border-radius: var(--sa-radius-full);
+  background: var(--sa-bg-muted);
+  overflow: hidden;
+}
+
+.sv-bar-fill {
+  height: 8px;
+  border-radius: var(--sa-radius-full);
+  background: var(--sa-primary-600);
+  width: var(--fill, 0%);
+}
+
+.sv-bar-series-fill {
+  width: 100%;
+  height: var(--bar-h, 0%);
+  border-radius: var(--sa-radius-xs) var(--sa-radius-xs) 0 0;
+  background: var(--sa-primary-600);
+  opacity: 0.85;
+}
+
+.sv-num {
+  font-variant-numeric: tabular-nums;
+}
+
+.sv-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.sv-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 8px 12px;
+  background: var(--sa-bg-subtle);
+  border-bottom: 1px solid var(--sa-border);
+  font-size: 11px;
+  font-weight: var(--sa-weight-semibold);
+  color: var(--sa-fg-tertiary);
+  text-transform: uppercase;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.sv-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--sa-border);
+  color: var(--sa-fg-secondary);
+  font-weight: var(--sa-weight-medium);
+  white-space: nowrap;
+}
+
+.sv-table .sv-align-right {
+  text-align: right;
+}
+
+.sv-neg {
+  color: var(--sa-error-600);
+}
+
+// .sv-table th/td already set color/font-weight/text-align with class+element
+// specificity — a same-specificity-or-lower Tailwind utility on the cell can't
+// win that fight regardless of stylesheet order, so overrides here are real
+// selectors (matched against the base rule's specificity) rather than utilities.
+.sv-table th.sv-table-cell--center,
+.sv-table td.sv-table-cell--center {
+  text-align: center;
+}
+
+.sv-table td.sv-table-cell--emphasis {
+  color: var(--sa-fg);
+}
+
+.sv-table td.sv-table-cell--muted {
+  color: var(--sa-fg-tertiary);
+  font-weight: var(--sa-weight-regular);
+}

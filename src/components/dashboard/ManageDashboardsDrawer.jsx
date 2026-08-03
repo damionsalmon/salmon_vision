@@ -38,52 +38,39 @@ export default function ManageDashboardsDrawer({
     <>
       <div className="sv-scrim" onClick={onClose} />
       <aside className="sv-drawer" onClick={(e) => e.stopPropagation()}>
-        <div
-          style={{
-            height: 56,
-            flexShrink: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "16px 24px",
-            borderBottom: "1px solid var(--sa-divider)"
-          }}
-        >
-          <span style={{ fontSize: 16, fontWeight: 600 }}>Manage dashboards</span>
+        <div className="h-14 shrink-0 flex items-center justify-between px-6 py-4 border-b border-[var(--sa-divider)]">
+          <span className="text-base font-semibold">Manage dashboards</span>
           <button type="button" className="sv-kebab" onClick={onClose} aria-label="Close">
             <Icon name="close" size={16} color="var(--sa-fg-secondary)" />
           </button>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 20, padding: 24, overflowY: "auto" }}>
-          <section style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            <span style={{ fontSize: 12, fontWeight: 600, letterSpacing: "0.5px", color: "var(--sa-fg-tertiary)" }}>
+        <div className="flex flex-col gap-5 p-6 overflow-y-auto">
+          <section className="flex flex-col gap-2">
+            <span className="text-xs font-semibold tracking-[var(--sa-tracking-lg)] text-grey-500">
               Predefined by Salmon
             </span>
             {homeDashboard && (
-              <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "8px 0" }}>
+              <div className="flex items-center gap-3 py-2">
                 <Toggle
                   on={homeDashboard.visible}
                   onChange={() => onToggleVisible(homeDashboard.id)}
                   label="Show Home"
                 />
-                <span style={{ fontSize: 14, fontWeight: 500 }}>{homeDashboard.name}</span>
+                <span className="text-sm font-medium">{homeDashboard.name}</span>
               </div>
             )}
           </section>
 
-          <section style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            <span style={{ fontSize: 12, fontWeight: 600, letterSpacing: "0.5px", color: "var(--sa-fg-tertiary)" }}>
-              Yours
-            </span>
+          <section className="flex flex-col gap-2">
+            <span className="text-xs font-semibold tracking-[var(--sa-tracking-lg)] text-grey-500">Yours</span>
             {userDashboards.map((dash) => (
-              <div key={dash.id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "8px 0" }}>
+              <div key={dash.id} className="flex items-center gap-3 py-2">
                 <Toggle on={dash.visible} onChange={() => onToggleVisible(dash.id)} label={"Show " + dash.name} />
                 {renameId === dash.id ? (
                   <input
                     autoFocus
-                    className="sv-field"
-                    style={{ height: 30, flexGrow: 1, minWidth: 0, boxShadow: "inset 0 0 0 1px var(--sa-primary-600)" }}
+                    className="sv-field sv-field--rename"
                     value={renameValue}
                     onChange={(e) => setRenameValue(e.target.value)}
                     onBlur={commit}
@@ -93,9 +80,9 @@ export default function ManageDashboardsDrawer({
                     }}
                   />
                 ) : (
-                  <span style={{ flexGrow: 1, minWidth: 0, fontSize: 14, fontWeight: 500 }}>{dash.name}</span>
+                  <span className="flex-grow min-w-0 text-sm font-medium">{dash.name}</span>
                 )}
-                <div style={{ position: "relative", flexShrink: 0 }}>
+                <div className="relative shrink-0">
                   <button
                     type="button"
                     className="sv-kebab"
@@ -105,10 +92,7 @@ export default function ManageDashboardsDrawer({
                     <KebabIcon color="var(--sa-fg-secondary)" />
                   </button>
                   {menuFor === dash.id && (
-                    <div
-                      className="sv-menu"
-                      style={{ position: "absolute", right: 0, top: 26, left: "auto", minWidth: 160 }}
-                    >
+                    <div className="sv-menu sv-menu--anchored">
                       <button
                         type="button"
                         className="sv-menu__item"

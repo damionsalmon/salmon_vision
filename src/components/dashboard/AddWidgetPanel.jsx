@@ -39,14 +39,17 @@ export default function AddWidgetPanel({ docked, onToggleDock, onClose, onApply,
   return (
     <div
       className={"sv-panel" + (docked ? " sv-panel--docked" : "")}
-      style={docked ? undefined : { left: pos.x, top: pos.y }}
+      style={docked ? undefined : { "--panel-x": pos.x + "px", "--panel-y": pos.y + "px" }}
     >
-      <div className="sv-panel__head" onMouseDown={startDrag} style={{ cursor: docked ? "default" : "grab" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      <div
+        className={"sv-panel__head" + (docked ? "" : " sv-panel__head--draggable")}
+        onMouseDown={startDrag}
+      >
+        <div className="flex items-center gap-2.5">
           <GripIcon />
-          <span style={{ fontSize: 18, fontWeight: 700, color: "var(--sa-fg)" }}>Add Widgets</span>
+          <span className="text-lg font-bold text-black">Add Widgets</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+        <div className="flex items-center gap-1">
           <button
             type="button"
             className="sv-kebab"
@@ -61,52 +64,26 @@ export default function AddWidgetPanel({ docked, onToggleDock, onClose, onApply,
         </div>
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 6,
-          padding: 8,
-          borderRadius: "var(--sa-radius-md)",
-          background: "var(--sa-bg-subtle)"
-        }}
-      >
-        <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
-          <span style={{ position: "absolute", left: 12, display: "flex" }}>
+      <div className="flex flex-col gap-1.5 p-2 rounded-md bg-grey-25">
+        <div className="relative flex items-center">
+          <span className="absolute left-3 flex">
             <Icon name="search" size={14} color="var(--sa-fg-tertiary)" />
           </span>
           <input
-            className="sv-field"
-            style={{ paddingLeft: 34 }}
+            className="sv-field pl-[34px]"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search widgets"
           />
         </div>
-        <span style={{ fontSize: 12, color: "var(--sa-fg-tertiary)" }}>Search the list of available widgets.</span>
+        <span className="text-xs text-grey-500">Search the list of available widgets.</span>
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <span
-          style={{
-            height: 28,
-            display: "flex",
-            alignItems: "center",
-            padding: "6px 12px",
-            borderRadius: "var(--sa-radius-full)",
-            background: "var(--sa-bg-muted)",
-            fontSize: 13,
-            fontWeight: 600,
-            color: "var(--sa-fg-secondary)"
-          }}
-        >
+      <div className="flex items-center justify-between">
+        <span className="h-7 flex items-center px-3 py-1.5 rounded-full bg-grey-100 text-[13px] font-semibold text-grey-700">
           Selected ({selected.length})
         </span>
-        <button
-          type="button"
-          onClick={() => setSelected([])}
-          style={{ fontSize: 14, fontWeight: 600, color: "var(--sa-fg-secondary)" }}
-        >
+        <button type="button" onClick={() => setSelected([])} className="text-sm font-semibold text-grey-700">
           Clear all
         </button>
       </div>
@@ -128,47 +105,31 @@ export default function AddWidgetPanel({ docked, onToggleDock, onClose, onApply,
               }}
               onDragEnd={onTileDragEnd}
             >
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <span
-                    style={{
-                      width: 16,
-                      height: 16,
-                      borderRadius: 4,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      background: on ? "var(--sa-primary-600)" : "transparent",
-                      boxShadow: on ? "none" : "inset 0 0 0 1px var(--sa-border-strong)"
-                    }}
-                  >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className={"sv-tile__check" + (on ? " sv-tile__check--on" : "")}>
                     {on && <Icon name="check" size={10} color="var(--sa-white)" strokeWidth={2.6} />}
                   </span>
                   <Icon name={type.icon} size={20} color="var(--sa-primary-600)" strokeWidth={1.6} />
                 </div>
                 <GripIcon />
               </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                <span style={{ fontSize: 12, fontWeight: 700, lineHeight: "18px", color: "var(--sa-fg-secondary)" }}>
-                  {type.title}
-                </span>
-                <span style={{ fontSize: 12, lineHeight: "18px", color: "var(--sa-fg-tertiary)" }}>
-                  {type.description}
-                </span>
+              <div className="flex flex-col gap-1">
+                <span className="text-xs font-bold leading-[18px] text-grey-700">{type.title}</span>
+                <span className="text-xs leading-[18px] text-grey-500">{type.description}</span>
               </div>
             </button>
           );
         })}
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 16 }}>
-        <button type="button" onClick={onClose} style={{ fontSize: 14, fontWeight: 600, color: "var(--sa-fg-secondary)" }}>
+      <div className="flex items-center justify-end gap-4">
+        <button type="button" onClick={onClose} className="text-sm font-semibold text-grey-700">
           Close
         </button>
         <button
           type="button"
-          className="sv-btn sv-btn--primary"
-          style={{ height: 37, padding: "10px 24px" }}
+          className="sv-btn sv-btn--primary sv-btn--apply"
           onClick={() => {
             if (selected.length) onApply(selected);
             setSelected([]);

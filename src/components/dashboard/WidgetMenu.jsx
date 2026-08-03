@@ -41,7 +41,12 @@ export default function WidgetMenu({ anchorRect, views, activeView, onSelectView
   const hasViews = views && views.length > 0;
 
   return createPortal(
-    <div ref={ref} className="sv-menu" style={{ left: pos.left, top: pos.top }} role="menu">
+    <div
+      ref={ref}
+      className="sv-menu"
+      style={{ "--menu-left": pos.left + "px", "--menu-top": pos.top + "px" }}
+      role="menu"
+    >
       {hasViews && (
         <>
           <div className="sv-menu__eyebrow">View</div>

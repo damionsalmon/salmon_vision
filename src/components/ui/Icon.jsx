@@ -209,7 +209,7 @@ const PATHS = {
   )
 };
 
-export default function Icon({ name, size = 16, color = "currentColor", strokeWidth = 2, style }) {
+export default function Icon({ name, size = 16, color = "currentColor", strokeWidth = 2, flip = false }) {
   const body = PATHS[name];
   if (!body) return null;
   return (
@@ -222,7 +222,7 @@ export default function Icon({ name, size = 16, color = "currentColor", strokeWi
       strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
-      style={{ flexShrink: 0, ...style }}
+      className={"shrink-0" + (flip ? " icon--flip" : "")}
       aria-hidden="true"
     >
       {body}

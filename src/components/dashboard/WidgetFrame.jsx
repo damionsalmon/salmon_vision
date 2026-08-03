@@ -49,13 +49,13 @@ function WidgetFrameInner(
     >
       <div className={"sv-widget" + (editing ? " sv-widget--editing" : "")}>
         <div className={"sv-widget__head" + (editing ? " sv-widget__drag sv-drag-handle" : "")}>
-          <div style={{ minWidth: 0, display: "flex", flexDirection: "column", gap: 2 }}>
+          <div className="sv-widget__titles">
             <span className="sv-widget__title">{type ? type.title : widget.type}</span>
             {activeView && activeView.id !== type.defaultView && (
               <span className="sv-widget__sub">{activeView.label}</span>
             )}
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
+          <div className="sv-widget__head-actions">
             {editing && <GripIcon />}
             {!editing && onOpenDetail && (
               <button type="button" className="sv-kebab" onClick={onOpenDetail} aria-label="Open detail">

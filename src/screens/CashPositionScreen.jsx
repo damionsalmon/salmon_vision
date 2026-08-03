@@ -7,132 +7,64 @@ const FILTERS = ["Bank", "Entity", "Account", "Market", "Currency"];
 /** Cash Position drill-down (the "NEXT" module screen from the Figma). */
 export default function CashPositionScreen() {
   return (
-    <div style={{ flexGrow: 1, alignSelf: "stretch", minHeight: 0, display: "flex", flexDirection: "column", gap: 24, padding: 12 }}>
-      <div style={{ display: "flex", gap: 16, flexShrink: 0 }}>
+    <div className="flex-grow self-stretch min-h-0 flex flex-col gap-6 p-3">
+      <div className="flex gap-4 shrink-0">
         {CURRENCY_TOTALS.map((row) => (
-          <div
-            key={row.code}
-            style={{
-              flex: 1,
-              minWidth: 0,
-              height: 108,
-              display: "flex",
-              flexDirection: "column",
-              gap: 12,
-              padding: 16,
-              borderRadius: "var(--sa-radius-xl)",
-              background: "var(--sa-white)",
-              boxShadow: "inset 0 0 0 1px var(--sa-divider)"
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <span
-                style={{
-                  padding: "4px 8px",
-                  borderRadius: "var(--sa-radius-sm)",
-                  background: "#EBF5FF",
-                  fontSize: 12,
-                  fontWeight: 700,
-                  color: "#2563EB"
-                }}
-              >
-                {row.code}
-              </span>
-              <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+          <div key={row.code} className="cp-currency-card">
+            <div className="flex items-center justify-between">
+              <span className="cp-chip">{row.code}</span>
+              <span className="flex items-center gap-1">
                 <Icon
                   name={row.trend >= 0 ? "arrowUp" : "arrowDown"}
                   size={10}
                   color={row.trend >= 0 ? "var(--sa-success-600)" : "var(--sa-error-600)"}
                 />
                 <span
-                  style={{
-                    fontSize: 12,
-                    fontWeight: 600,
-                    color: row.trend >= 0 ? "var(--sa-success-600)" : "var(--sa-error-600)"
-                  }}
+                  className={"text-xs font-semibold" + (row.trend >= 0 ? " text-success-600" : " text-error-600")}
                 >
                   {formatPercent(row.trend)}
                 </span>
               </span>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              <span
-                className="sv-num"
-                style={{ fontSize: 20, fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
-              >
+            <div className="flex flex-col gap-1">
+              <span className="sv-num text-xl font-bold whitespace-nowrap overflow-hidden text-ellipsis">
                 {formatMoney(row.amount, row.code)}
               </span>
-              <span style={{ fontSize: 11, fontWeight: 500, color: "var(--sa-fg-tertiary)" }}>Available Balance</span>
+              <span className="text-[11px] font-medium text-grey-500">Available Balance</span>
             </div>
           </div>
         ))}
       </div>
 
-      <div
-        style={{
-          flexGrow: 1,
-          minHeight: 0,
-          display: "flex",
-          flexDirection: "column",
-          overflow: "hidden",
-          borderRadius: "var(--sa-radius-xl)",
-          background: "var(--sa-white)",
-          boxShadow: "inset 0 0 0 1px var(--sa-divider)"
-        }}
-      >
-        <div
-          style={{
-            flexShrink: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 12,
-            padding: "12px 16px",
-            background: "var(--sa-bg-subtle)",
-            borderBottom: "1px solid var(--sa-border)"
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <span className="sv-btn" style={{ height: 27, padding: "6px 10px", fontSize: 12, fontWeight: 500 }}>
+      <div className="cp-table-card">
+        <div className="cp-toolbar">
+          <div className="flex items-center gap-2">
+            <span className="sv-btn sv-btn--filter">
               <Icon name="funnel" size={12} color="var(--sa-fg-secondary)" />
               Filter set
               <Icon name="chevronDown" size={10} color="var(--sa-fg-tertiary)" />
             </span>
-            <span style={{ width: 1, height: 16, background: "var(--sa-divider)" }} />
+            <span className="w-px h-4 bg-[var(--sa-divider)]" />
             {FILTERS.map((label) => (
-              <span key={label} className="sv-btn" style={{ height: 27, padding: "6px 10px", fontSize: 12, fontWeight: 500 }}>
+              <span key={label} className="sv-btn sv-btn--filter">
                 {label}
                 <Icon name="chevronDown" size={10} color="var(--sa-fg-tertiary)" />
               </span>
             ))}
-            <span
-              style={{
-                height: 27,
-                display: "flex",
-                alignItems: "center",
-                padding: "6px 10px",
-                borderRadius: "var(--sa-radius-sm)",
-                background: "var(--sa-primary-25)",
-                fontSize: 12,
-                fontWeight: 600,
-                color: "var(--sa-primary-600)"
-              }}
-            >
-              Clear Filter
-            </span>
+            <span className="cp-clear-filter">Clear Filter</span>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <span className="sv-btn" style={{ width: 26, height: 26, padding: 0 }}>
+          <div className="flex items-center gap-3">
+            <span className="sv-btn sv-btn--icon-26">
               <Icon name="search" size={14} color="var(--sa-fg-secondary)" />
             </span>
-            <span className="sv-btn" style={{ height: 27, padding: "6px 10px", fontSize: 12, fontWeight: 500 }}>
+            <span className="sv-btn sv-btn--filter">
               Booked balance
               <Icon name="chevronDown" size={10} color="var(--sa-fg-tertiary)" />
             </span>
-            <span className="sv-btn" style={{ width: 26, height: 26, padding: 0 }}>
+            <span className="sv-btn sv-btn--icon-26">
               <Icon name="download" size={14} color="var(--sa-fg-secondary)" />
             </span>
-            <span className="sv-btn" style={{ height: 27, padding: "6px 10px", fontSize: 12, fontWeight: 500 }}>
+            <span className="sv-btn sv-btn--filter">
               <Icon name="layers" size={12} color="var(--sa-fg-secondary)" />
               Group by
               <Icon name="chevronDown" size={10} color="var(--sa-fg-tertiary)" />
@@ -140,7 +72,7 @@ export default function CashPositionScreen() {
           </div>
         </div>
 
-        <div style={{ flexGrow: 1, minHeight: 0, overflow: "auto" }}>
+        <div className="flex-grow min-h-0 overflow-auto">
           <table className="sv-table">
             <thead>
               <tr>
@@ -151,14 +83,14 @@ export default function CashPositionScreen() {
                 <th className="sv-align-right">Booked balance</th>
                 <th className="sv-align-right">In EUR</th>
                 <th className="sv-align-right">Last updated</th>
-                <th style={{ textAlign: "center" }}>Actions</th>
+                <th className="sv-table-cell--center">Actions</th>
               </tr>
             </thead>
             <tbody>
               {ACCOUNTS.map((row) => (
                 <tr key={row.id}>
-                  <td style={{ color: "var(--sa-fg)" }}>
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                  <td className="sv-table-cell--emphasis">
+                    <span className="inline-flex items-center gap-2">
                       <Icon name="building" size={14} color="var(--sa-fg)" strokeWidth={1.4} />
                       {row.bank}
                     </span>
@@ -168,25 +100,16 @@ export default function CashPositionScreen() {
                   <td>{row.account}</td>
                   <td className={"sv-align-right sv-num" + (row.balance < 0 ? " sv-neg" : "")}>
                     {formatMoney(row.balance, row.currency)}{" "}
-                    <span style={{ fontSize: 10, color: "var(--sa-fg-tertiary)" }}>{row.currency}</span>
+                    <span className="text-[10px] text-grey-500">{row.currency}</span>
                   </td>
                   <td className={"sv-align-right sv-num" + (row.eur < 0 ? " sv-neg" : "")}>
-                    {formatMoney(row.eur, "EUR")} <span style={{ fontSize: 10, color: "var(--sa-fg-tertiary)" }}>EUR</span>
+                    {formatMoney(row.eur, "EUR")} <span className="text-[10px] text-grey-500">EUR</span>
                   </td>
-                  <td className="sv-align-right" style={{ color: "var(--sa-fg-tertiary)", fontWeight: 400 }}>
+                  <td className="sv-align-right sv-table-cell--muted">
                     {row.updated}
-                    <span
-                      style={{
-                        display: "inline-block",
-                        width: 6,
-                        height: 6,
-                        marginLeft: 6,
-                        borderRadius: "50%",
-                        background: "var(--sa-success-600)"
-                      }}
-                    />
+                    <span className="inline-block w-1.5 h-1.5 ml-1.5 rounded-full bg-success-600" />
                   </td>
-                  <td style={{ textAlign: "center" }}>
+                  <td className="text-center">
                     <Icon name="arrowRight" size={14} color="var(--sa-fg-secondary)" strokeWidth={1.4} />
                   </td>
                 </tr>
@@ -195,23 +118,14 @@ export default function CashPositionScreen() {
           </table>
         </div>
 
-        <div
-          style={{
-            flexShrink: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "12px 16px",
-            borderTop: "1px solid var(--sa-border)"
-          }}
-        >
-          <span style={{ fontSize: 12, color: "var(--sa-fg-tertiary)" }}>{ACCOUNTS.length} accounts</span>
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <span style={{ fontSize: 12, fontWeight: 500, color: "var(--sa-fg-secondary)" }}>Page 1 of 1</span>
-            <span className="sv-btn" style={{ width: 24, height: 24, padding: 0 }}>
-              <Icon name="chevronRight" size={10} color="var(--sa-fg-tertiary)" style={{ transform: "rotate(180deg)" }} />
+        <div className="cp-footer">
+          <span className="text-xs text-grey-500">{ACCOUNTS.length} accounts</span>
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-medium text-grey-700">Page 1 of 1</span>
+            <span className="sv-btn sv-btn--icon-24">
+              <Icon name="chevronRight" size={10} color="var(--sa-fg-tertiary)" flip />
             </span>
-            <span className="sv-btn" style={{ width: 24, height: 24, padding: 0 }}>
+            <span className="sv-btn sv-btn--icon-24">
               <Icon name="chevronRight" size={10} color="var(--sa-fg-tertiary)" />
             </span>
           </div>

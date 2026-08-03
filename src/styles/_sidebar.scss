@@ -1,0 +1,96 @@
+.sv-sidebar {
+  position: relative;
+  width: 230px;
+  align-self: stretch;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.sv-nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-self: stretch;
+}
+
+.sv-nav-row {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  border-radius: var(--sa-radius-md);
+  font-size: 12px;
+  font-weight: var(--sa-weight-medium);
+  color: var(--sa-fg-secondary);
+  text-align: left;
+  width: 100%;
+}
+
+.sv-nav-row:hover {
+  background: var(--sa-grey-50);
+}
+
+.sv-nav-row--clickable {
+  cursor: pointer;
+}
+
+.sv-nav-row__label {
+  flex-grow: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sv-nav-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-self: stretch;
+  margin-left: 26px;
+  padding-left: 10px;
+  border-left: 1px solid var(--sa-divider);
+}
+
+.sv-nav-tree .sv-nav-row {
+  height: 32px;
+  gap: 8px;
+  padding: 8px 12px 8px 6px;
+}
+
+.sv-nav-row--active .sv-nav-row__label {
+  color: var(--sa-fg-brand);
+  font-weight: var(--sa-weight-semibold);
+}
+
+.sv-nav-dash {
+  width: 12px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.sv-nav-dash--active {
+  color: var(--sa-primary-600);
+}
+
+.sv-eyebrow {
+  padding: 0 16px 4px;
+  font-size: 11px;
+  font-weight: var(--sa-weight-semibold);
+  letter-spacing: var(--sa-tracking-md);
+  text-transform: uppercase;
+  color: var(--sa-fg-tertiary);
+}
+
+.sv-rule {
+  height: 1px;
+  align-self: stretch;
+  background: var(--sa-divider);
+}

@@ -1,0 +1,46 @@
+.sv-canvas {
+  position: relative;
+  flex-grow: 1;
+  align-self: stretch;
+  min-height: 0;
+  overflow: auto;
+  padding: 12px;
+  border-radius: var(--sa-radius-xl);
+}
+
+.sv-canvas--editing {
+  padding-bottom: 76px;
+}
+
+.sv-canvas--drop {
+  outline: 2px dashed var(--sa-primary-600);
+  outline-offset: -6px;
+}
+
+.sv-canvas--docked {
+  padding-right: 615px;
+}
+
+// react-grid-layout overrides — these target the library's own class names
+// (contractual, not ours to rename) and must stay real CSS selectors rather
+// than Tailwind utilities.
+
+.react-grid-item.react-grid-placeholder {
+  background: var(--sa-primary-100);
+  opacity: 0.5;
+  border-radius: var(--sa-radius-xl);
+}
+
+.react-grid-item > .react-resizable-handle {
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+.sv-grid--editing .react-grid-item > .react-resizable-handle {
+  opacity: 1;
+}
+
+.react-grid-item > .react-resizable-handle::after {
+  border-right-color: var(--sa-grey-400);
+  border-bottom-color: var(--sa-grey-400);
+}

@@ -1,0 +1,55 @@
+.sv-tabbar {
+  height: 56px;
+  align-self: stretch;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 12px;
+}
+
+.sv-tabs {
+  height: 44px;
+  max-width: 1020px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--sa-radius-lg);
+  background: var(--sa-bg-muted);
+  box-shadow: inset 0 0 0 1px var(--sa-border);
+  scrollbar-width: thin;
+}
+
+.sv-tab {
+  height: 36px;
+  min-width: 103px;
+  flex-shrink: 0;
+  padding: 8px 12px;
+  border-radius: var(--sa-radius-sm);
+  font-size: 14px;
+  font-weight: var(--sa-weight-semibold);
+  line-height: 20px;
+  color: var(--sa-fg-tertiary);
+  white-space: nowrap;
+}
+
+.sv-tab--active {
+  background: var(--sa-white);
+  color: var(--sa-fg-secondary);
+  box-shadow: var(--sa-shadow-sm);
+}
+
+.sv-tab-add {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: var(--sa-radius-md);
+  background: var(--sa-white);
+  box-shadow: inset 0 0 0 1px var(--sa-border-strong), var(--sa-shadow-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

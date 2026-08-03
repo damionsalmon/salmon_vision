@@ -3,23 +3,14 @@ import Icon from "../ui/Icon.jsx";
 
 function NavRow({ icon, label, badge, active, onClick, trailing }) {
   return (
-    <div className={"sv-nav-row" + (active ? " sv-nav-row--active" : "")} onClick={onClick} style={{ cursor: onClick ? "pointer" : "default" }}>
+    <div
+      className={"sv-nav-row" + (active ? " sv-nav-row--active" : "") + (onClick ? " sv-nav-row--clickable" : "")}
+      onClick={onClick}
+    >
       <Icon name={icon} size={16} color={active ? "var(--sa-primary-600)" : "var(--sa-grey-500)"} />
       <span className="sv-nav-row__label">{label}</span>
       {badge != null && (
-        <span
-          style={{
-            width: 20,
-            height: 20,
-            borderRadius: "var(--sa-radius-full)",
-            background: "var(--sa-bg-muted)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 11,
-            fontWeight: 600
-          }}
-        >
+        <span className="w-5 h-5 rounded-full bg-grey-100 flex items-center justify-center text-[11px] font-semibold">
           {badge}
         </span>
       )}
@@ -41,26 +32,14 @@ export default function Sidebar({
   const onDashboard = view === "dashboard";
   return (
     <nav className="sv-sidebar">
-      <div style={{ display: "flex", flexDirection: "column", gap: 24, alignSelf: "stretch" }}>
-        <div style={{ position: "relative", height: 46, flexShrink: 0 }}>
+      <div className="flex flex-col gap-6 self-stretch">
+        <div className="relative h-[46px] shrink-0">
           <img
             src="assets/salmon-logo-colour.png"
             alt="Salmon"
-            style={{ position: "absolute", left: 0, top: 0, width: 123, height: 30, objectFit: "contain", objectPosition: "left center" }}
+            className="absolute left-0 top-0 w-[123px] h-[30px] object-contain object-left"
           />
-          <span
-            style={{
-              position: "absolute",
-              left: 36,
-              top: 34,
-              width: 104,
-              textAlign: "center",
-              fontSize: 10,
-              fontWeight: 600,
-              letterSpacing: "0.04em",
-              color: "var(--sa-primary-600)"
-            }}
-          >
+          <span className="absolute left-[36px] top-[34px] w-[104px] text-center text-[10px] font-semibold tracking-[var(--sa-tracking-xs)] text-primary-600">
             TREASURER V6.0.0
           </span>
         </div>
@@ -70,10 +49,10 @@ export default function Sidebar({
           <NavRow icon="agents" label="Agents" />
           <div className="sv-nav-row">
             <Icon name="grid" size={16} color="var(--sa-grey-500)" />
-            <button className="sv-nav-row__label" style={{ textAlign: "left" }} onClick={onToggleDashOpen}>
+            <button className="sv-nav-row__label text-left" onClick={onToggleDashOpen}>
               Dashboards
             </button>
-            <button onClick={onToggleDashOpen} aria-label="Toggle dashboards" style={{ display: "flex" }}>
+            <button onClick={onToggleDashOpen} aria-label="Toggle dashboards" className="flex">
               <Icon name={dashOpen ? "chevronUp" : "chevronDown"} size={12} color="var(--sa-grey-500)" />
             </button>
             <button className="sv-kebab" onClick={onOpenManage} title="Manage dashboards">
@@ -88,13 +67,10 @@ export default function Sidebar({
                 return (
                   <div
                     key={dash.id}
-                    className={"sv-nav-row" + (active ? " sv-nav-row--active" : "")}
-                    style={{ cursor: "pointer" }}
+                    className={"sv-nav-row cursor-pointer" + (active ? " sv-nav-row--active" : "")}
                     onClick={() => onSelectDashboard(dash.id)}
                   >
-                    <span className="sv-nav-dash" style={{ color: active ? "var(--sa-primary-600)" : "inherit" }}>
-                      –
-                    </span>
+                    <span className={"sv-nav-dash" + (active ? " sv-nav-dash--active" : "")}>–</span>
                     <span className="sv-nav-row__label">{dash.name}</span>
                   </div>
                 );
@@ -115,8 +91,8 @@ export default function Sidebar({
         </div>
       </div>
 
-      <div className="sv-nav-group" style={{ flexShrink: 0 }}>
-        <div className="sv-rule" style={{ marginBottom: 12 }} />
+      <div className="sv-nav-group shrink-0">
+        <div className="sv-rule mb-3" />
         <NavRow icon="gear" label="Settings" />
         <NavRow icon="lifebuoy" label="Support" />
         <NavRow icon="book" label="Documentation" />

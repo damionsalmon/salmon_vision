@@ -10,15 +10,15 @@ export function NewDashboardModal({ onCancel, onCreate }) {
       <div className="sv-scrim" onClick={onCancel} />
       <div className="sv-modal">
         <div className="sv-modal__card">
-          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-            <span style={{ fontSize: 18, fontWeight: 700 }}>New Dashboard</span>
-            <span style={{ fontSize: 12, color: "var(--sa-fg-tertiary)" }}>
+          <div className="flex flex-col gap-1">
+            <span className="text-lg font-bold">New Dashboard</span>
+            <span className="text-xs text-grey-500">
               Create a customized space to monitor specific key performance indicators.
             </span>
           </div>
-          <label style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            <span style={{ fontSize: 14, fontWeight: 600, color: "var(--sa-fg-secondary)" }}>
-              Dashboard name <span style={{ color: "var(--sa-primary-600)" }}>*</span>
+          <label className="flex flex-col gap-1.5">
+            <span className="text-sm font-semibold text-grey-700">
+              Dashboard name <span className="text-primary-600">*</span>
             </span>
             <input
               autoFocus
@@ -29,16 +29,11 @@ export function NewDashboardModal({ onCancel, onCreate }) {
               placeholder="e.g. Daily Cash Overview"
             />
           </label>
-          <div style={{ display: "flex", justifyContent: "flex-end", gap: 12 }}>
+          <div className="flex justify-end gap-3">
             <button type="button" className="sv-btn" onClick={onCancel}>
               Cancel
             </button>
-            <button
-              type="button"
-              className="sv-btn sv-btn--primary"
-              onClick={submit}
-              style={{ opacity: name.trim() ? 1 : 0.4 }}
-            >
+            <button type="button" className="sv-btn sv-btn--primary" onClick={submit} disabled={!name.trim()}>
               Create
             </button>
           </div>
@@ -54,13 +49,13 @@ export function ConfirmDeleteModal({ dashboardName, onCancel, onConfirm }) {
       <div className="sv-scrim" onClick={onCancel} />
       <div className="sv-modal">
         <div className="sv-modal__card">
-          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-            <span style={{ fontSize: 18, fontWeight: 700 }}>Delete dashboard</span>
-            <span style={{ fontSize: 12, lineHeight: "18px", color: "var(--sa-fg-tertiary)" }}>
+          <div className="flex flex-col gap-1">
+            <span className="text-lg font-bold">Delete dashboard</span>
+            <span className="text-xs leading-[18px] text-grey-500">
               Delete “{dashboardName}”? This removes the dashboard and its widgets.
             </span>
           </div>
-          <div style={{ display: "flex", justifyContent: "flex-end", gap: 12 }}>
+          <div className="flex justify-end gap-3">
             <button type="button" className="sv-btn" onClick={onCancel}>
               Cancel
             </button>
