@@ -1,6 +1,5 @@
-import React from "react";
-import Icon from "../components/ui/Icon.jsx";
-import { ACCOUNTS, CURRENCY_TOTALS, formatMoney, formatPercent } from "../data/mockData.js";
+import Icon from "../components/ui/Icon";
+import { ACCOUNTS, CURRENCY_TOTALS, formatMoney, formatPercent } from "../data/mockData";
 
 const FILTERS = ["Bank", "Entity", "Account", "Market", "Currency"];
 

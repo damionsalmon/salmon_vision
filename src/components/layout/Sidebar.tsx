@@ -1,7 +1,17 @@
 import React from "react";
-import Icon from "../ui/Icon.jsx";
+import Icon from "../ui/Icon";
+import type { Dashboard } from "../../types";
 
-function NavRow({ icon, label, badge, active, onClick, trailing }) {
+export interface NavRowProps {
+  icon: string;
+  label: string;
+  badge?: number;
+  active?: boolean;
+  onClick?: () => void;
+  trailing?: React.ReactNode;
+}
+
+function NavRow({ icon, label, badge, active, onClick, trailing }: NavRowProps) {
   return (
     <div
       className={"sv-nav-row" + (active ? " sv-nav-row--active" : "") + (onClick ? " sv-nav-row--clickable" : "")}
@@ -19,6 +29,17 @@ function NavRow({ icon, label, badge, active, onClick, trailing }) {
   );
 }
 
+export interface SidebarProps {
+  dashboards: Dashboard[];
+  activeDashboardId: string;
+  view: string;
+  dashOpen: boolean;
+  onToggleDashOpen: () => void;
+  onSelectDashboard: (id: string) => void;
+  onOpenManage: () => void;
+  onOpenModule: () => void;
+}
+
 export default function Sidebar({
   dashboards,
   activeDashboardId,
@@ -28,7 +49,7 @@ export default function Sidebar({
   onSelectDashboard,
   onOpenManage,
   onOpenModule
-}) {
+}: SidebarProps) {
   const onDashboard = view === "dashboard";
   return (
     <nav className="sv-sidebar">

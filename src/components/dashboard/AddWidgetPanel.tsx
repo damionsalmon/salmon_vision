@@ -1,13 +1,22 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import Icon, { GripIcon } from "../ui/Icon.jsx";
-import { WIDGET_CATALOG } from "../../lib/widgetRegistry.js";
+import Icon, { GripIcon } from "../ui/Icon";
+import { WIDGET_CATALOG } from "../../lib/widgetRegistry";
+
+export interface AddWidgetPanelProps {
+  docked: boolean;
+  onToggleDock: () => void;
+  onClose: () => void;
+  onApply: (typeIds: string[]) => void;
+  onTileDragStart: (typeId: string) => void;
+  onTileDragEnd: () => void;
+}
 
 /** Floating, draggable, dockable widget catalogue. */
-export default function AddWidgetPanel({ docked, onToggleDock, onClose, onApply, onTileDragStart, onTileDragEnd }) {
+export default function AddWidgetPanel({ docked, onToggleDock, onClose, onApply, onTileDragStart, onTileDragEnd }: AddWidgetPanelProps) {
   const [pos, setPos] = useState({ x: 760, y: 48 });
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState<string[]>([]);
   const [query, setQuery] = useState("");
-  const dragState = useRef(null);
+  const dragState = useRef<{ ox: number; oy: number } | null>(null);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -15,10 +24,10 @@ export default function AddWidgetPanel({ docked, onToggleDock, onClose, onApply,
   }, [query]);
 
   const startDrag = useCallback(
-    (e) => {
+    (e: React.MouseEvent) => {
       if (docked) return;
       dragState.current = { ox: e.clientX - pos.x, oy: e.clientY - pos.y };
-      const move = (ev) => {
+      const move = (ev: MouseEvent) => {
         const s = dragState.current;
         if (!s) return;
         setPos({ x: ev.clientX - s.ox, y: ev.clientY - s.oy });
@@ -34,12 +43,12 @@ export default function AddWidgetPanel({ docked, onToggleDock, onClose, onApply,
     [docked, pos]
   );
 
-  const toggle = (id) => setSelected((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+  const toggle = (id: string) => setSelected((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
 
   return (
     <div
       className={"sv-panel" + (docked ? " sv-panel--docked" : "")}
-      style={docked ? undefined : { "--panel-x": pos.x + "px", "--panel-y": pos.y + "px" }}
+      style={docked ? undefined : ({ "--panel-x": pos.x + "px", "--panel-y": pos.y + "px" } as React.CSSProperties)}
     >
       <div
         className={"sv-panel__head" + (docked ? "" : " sv-panel__head--draggable")}

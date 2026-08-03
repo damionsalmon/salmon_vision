@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import {
   ACCOUNTS,
   BANK_TOTALS,
@@ -7,12 +7,13 @@ import {
   CURRENCY_TOTALS,
   TOP_ACCOUNTS,
   formatMoney
-} from "../../data/mockData.js";
-import { AccountsTable, BarSeries, BreakdownList, Sparkline, TopAccountsList, TrendPill } from "./parts.jsx";
+} from "../../data/mockData";
+import type { WidgetBodyProps } from "../../types";
+import { AccountsTable, BarSeries, BreakdownList, Sparkline, TopAccountsList, TrendPill } from "./parts";
 
 const TOTAL_EUR = CURRENCY_TOTALS.reduce((sum, row) => sum + row.eur, 0);
 
-function CurrentCashWidget({ view, seed = 0 }) {
+function CurrentCashWidget({ view, seed = 0 }: WidgetBodyProps) {
   if (view === "byCurrency") {
     return (
       <BreakdownList
@@ -65,7 +66,7 @@ function CurrentCashWidget({ view, seed = 0 }) {
   );
 }
 
-function CashOverTimeWidget({ view }) {
+function CashOverTimeWidget({ view }: WidgetBodyProps) {
   if (view === "bars") return <BarSeries series={CASH_SERIES} />;
   if (view === "table") {
     return (
@@ -90,7 +91,7 @@ function CashOverTimeWidget({ view }) {
   return <Sparkline series={CASH_SERIES} />;
 }
 
-function BalanceByCurrencyWidget({ view }) {
+function BalanceByCurrencyWidget({ view }: WidgetBodyProps) {
   if (view === "table") {
     return (
       <table className="sv-table">
@@ -127,7 +128,7 @@ function BalanceByCurrencyWidget({ view }) {
 }
 
 /** Types the source designs do not cover yet — rendered as an explicit gap, never invented. */
-function UndesignedWidget({ title }) {
+function UndesignedWidget({ title }: WidgetBodyProps) {
   return (
     <div className="h-full flex items-center justify-center p-3 rounded-md border border-dashed border-[var(--sa-border-strong)] bg-grey-25 text-center">
       <span className="text-xs leading-[18px] text-grey-500">

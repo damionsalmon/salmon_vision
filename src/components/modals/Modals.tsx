@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-export function NewDashboardModal({ onCancel, onCreate }) {
+export interface NewDashboardModalProps {
+  onCancel: () => void;
+  onCreate: (name: string) => void;
+}
+
+export function NewDashboardModal({ onCancel, onCreate }: NewDashboardModalProps) {
   const [name, setName] = useState("");
   const submit = () => {
     if (name.trim()) onCreate(name.trim());
@@ -43,7 +48,13 @@ export function NewDashboardModal({ onCancel, onCreate }) {
   );
 }
 
-export function ConfirmDeleteModal({ dashboardName, onCancel, onConfirm }) {
+export interface ConfirmDeleteModalProps {
+  dashboardName: string;
+  onCancel: () => void;
+  onConfirm: () => void;
+}
+
+export function ConfirmDeleteModal({ dashboardName, onCancel, onConfirm }: ConfirmDeleteModalProps) {
   return (
     <>
       <div className="sv-scrim" onClick={onCancel} />

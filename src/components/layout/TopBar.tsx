@@ -1,7 +1,15 @@
 import React from "react";
-import Icon from "../ui/Icon.jsx";
+import Icon from "../ui/Icon";
+import type { Crumb } from "../../types";
 
-export default function TopBar({ crumbs, onToggleNav, onOpenManage, actions }) {
+export interface TopBarProps {
+  crumbs: Crumb[];
+  onToggleNav: () => void;
+  onOpenManage: () => void;
+  actions?: React.ReactNode;
+}
+
+export default function TopBar({ crumbs, onToggleNav, onOpenManage, actions }: TopBarProps) {
   return (
     <header className="sv-header">
       <button type="button" onClick={onToggleNav} title="Collapse navigation" className="flex">

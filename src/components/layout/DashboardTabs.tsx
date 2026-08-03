@@ -1,7 +1,14 @@
-import React from "react";
-import Icon from "../ui/Icon.jsx";
+import Icon from "../ui/Icon";
+import type { Dashboard } from "../../types";
 
-export default function DashboardTabs({ dashboards, activeId, onSelect, onCreate }) {
+export interface DashboardTabsProps {
+  dashboards: Dashboard[];
+  activeId: string;
+  onSelect: (id: string) => void;
+  onCreate: () => void;
+}
+
+export default function DashboardTabs({ dashboards, activeId, onSelect, onCreate }: DashboardTabsProps) {
   return (
     <div className="sv-tabbar">
       <div className="sv-tabs">

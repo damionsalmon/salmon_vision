@@ -1,7 +1,7 @@
 import React from "react";
 
 /** Lucide-derived 24x24 stroke icons (the design system substitutes Lucide for FA6 Pro). */
-const PATHS = {
+const PATHS: Record<string, React.ReactNode> = {
   bell: (
     <>
       <path d="M10.268 21a2 2 0 0 0 3.464 0" />
@@ -209,7 +209,15 @@ const PATHS = {
   )
 };
 
-export default function Icon({ name, size = 16, color = "currentColor", strokeWidth = 2, flip = false }) {
+export interface IconProps {
+  name: string;
+  size?: number;
+  color?: string;
+  strokeWidth?: number;
+  flip?: boolean;
+}
+
+export default function Icon({ name, size = 16, color = "currentColor", strokeWidth = 2, flip = false }: IconProps) {
   const body = PATHS[name];
   if (!body) return null;
   return (
@@ -230,7 +238,12 @@ export default function Icon({ name, size = 16, color = "currentColor", strokeWi
   );
 }
 
-export function KebabIcon({ size = 16, color = "var(--sa-grey-500)" }) {
+export interface DotIconProps {
+  size?: number;
+  color?: string;
+}
+
+export function KebabIcon({ size = 16, color = "var(--sa-grey-500)" }: DotIconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 16 16" fill={color} aria-hidden="true">
       <circle cx="3.4" cy="8" r="1.15" />
@@ -240,7 +253,7 @@ export function KebabIcon({ size = 16, color = "var(--sa-grey-500)" }) {
   );
 }
 
-export function GripIcon({ size = 16, color = "var(--sa-grey-400)" }) {
+export function GripIcon({ size = 16, color = "var(--sa-grey-400)" }: DotIconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 16 16" fill={color} aria-hidden="true">
       <circle cx="6" cy="3.2" r="1.1" />

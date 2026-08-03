@@ -1,4 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type RefObject } from "react";
+
+export interface ScrollBand {
+  top: number;
+  bottom: number;
+}
 
 /**
  * Tracks the visible scroll band of a container.
@@ -6,8 +11,8 @@ import { useEffect, useState } from "react";
  * (or near) view mount their contents. Layout maths rather than
  * IntersectionObserver, so it is deterministic and testable.
  */
-export default function useScrollWindow(ref, buffer = 600) {
-  const [band, setBand] = useState({ top: 0, bottom: Infinity });
+export default function useScrollWindow(ref: RefObject<HTMLElement | null>, buffer = 600): ScrollBand {
+  const [band, setBand] = useState<ScrollBand>({ top: 0, bottom: Infinity });
 
   useEffect(() => {
     const el = ref.current;

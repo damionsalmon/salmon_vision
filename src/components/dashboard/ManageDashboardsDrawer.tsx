@@ -1,7 +1,14 @@
-import React, { useState } from "react";
-import Icon, { KebabIcon } from "../ui/Icon.jsx";
+import { useState } from "react";
+import Icon, { KebabIcon } from "../ui/Icon";
+import type { Dashboard } from "../../types";
 
-function Toggle({ on, onChange, label }) {
+export interface ToggleProps {
+  on: boolean;
+  onChange: () => void;
+  label: string;
+}
+
+function Toggle({ on, onChange, label }: ToggleProps) {
   return (
     <button
       type="button"
@@ -16,6 +23,15 @@ function Toggle({ on, onChange, label }) {
   );
 }
 
+export interface ManageDashboardsDrawerProps {
+  homeDashboard?: Dashboard;
+  userDashboards: Dashboard[];
+  onToggleVisible: (id: string) => void;
+  onRename: (id: string, name: string) => void;
+  onAskDelete: (id: string) => void;
+  onClose: () => void;
+}
+
 /** Right-hand drawer: show/hide, rename and delete dashboards. */
 export default function ManageDashboardsDrawer({
   homeDashboard,
@@ -24,9 +40,9 @@ export default function ManageDashboardsDrawer({
   onRename,
   onAskDelete,
   onClose
-}) {
-  const [menuFor, setMenuFor] = useState(null);
-  const [renameId, setRenameId] = useState(null);
+}: ManageDashboardsDrawerProps) {
+  const [menuFor, setMenuFor] = useState<string | null>(null);
+  const [renameId, setRenameId] = useState<string | null>(null);
   const [renameValue, setRenameValue] = useState("");
 
   const commit = () => {

@@ -1,10 +1,11 @@
-import { BalanceByCurrency, CashOverTime, CurrentCash, Undesigned } from "../components/widgets/index.jsx";
+import { BalanceByCurrency, CashOverTime, CurrentCash, Undesigned } from "../components/widgets/index";
+import type { WidgetTypeDef } from "../types";
 
 /**
  * One entry per widget type. `views` drives the VIEW section of the widget
  * ellipsis menu; `defaultLayout` seeds react-grid-layout (12-col grid).
  */
-export const WIDGET_TYPES = {
+export const WIDGET_TYPES: Record<string, WidgetTypeDef> = {
   currentCash: {
     id: "currentCash",
     title: "Current Cash",
@@ -91,8 +92,8 @@ export const WIDGET_TYPES = {
   }
 };
 
-export const WIDGET_CATALOG = Object.values(WIDGET_TYPES);
+export const WIDGET_CATALOG: WidgetTypeDef[] = Object.values(WIDGET_TYPES);
 
-export function getWidgetType(typeId) {
+export function getWidgetType(typeId: string): WidgetTypeDef | null {
   return WIDGET_TYPES[typeId] || null;
 }

@@ -1,30 +1,39 @@
 import React, { useCallback, useRef, useState } from "react";
-import Sidebar from "./components/layout/Sidebar.jsx";
-import TopBar from "./components/layout/TopBar.jsx";
-import DashboardTabs from "./components/layout/DashboardTabs.jsx";
-import WidgetGrid, { GRID_COLS, GRID_MARGIN, GRID_ROW_HEIGHT } from "./components/dashboard/WidgetGrid.jsx";
-import EmptyState from "./components/dashboard/EmptyState.jsx";
-import AddWidgetPanel from "./components/dashboard/AddWidgetPanel.jsx";
-import ManageDashboardsDrawer from "./components/dashboard/ManageDashboardsDrawer.jsx";
-import { ConfirmDeleteModal, NewDashboardModal } from "./components/modals/Modals.jsx";
-import CashPositionScreen from "./screens/CashPositionScreen.jsx";
-import Icon from "./components/ui/Icon.jsx";
-import useDashboards from "./hooks/useDashboards.js";
+import Sidebar from "./components/layout/Sidebar";
+import TopBar from "./components/layout/TopBar";
+import DashboardTabs from "./components/layout/DashboardTabs";
+import WidgetGrid, { GRID_COLS, GRID_MARGIN, GRID_ROW_HEIGHT } from "./components/dashboard/WidgetGrid";
+import EmptyState from "./components/dashboard/EmptyState";
+import AddWidgetPanel from "./components/dashboard/AddWidgetPanel";
+import ManageDashboardsDrawer from "./components/dashboard/ManageDashboardsDrawer";
+import { ConfirmDeleteModal, NewDashboardModal } from "./components/modals/Modals";
+import CashPositionScreen from "./screens/CashPositionScreen";
+import Icon from "./components/ui/Icon";
+import useDashboards from "./hooks/useDashboards";
+import type { Crumb, GridPosition } from "./types";
 
-export default function App({ startEmpty = false, drilldownEnabled = false }) {
+export interface AppProps {
+  startEmpty?: boolean;
+  drilldownEnabled?: boolean;
+}
+
+type View = "dashboard" | "module";
+type ModalKind = "newDashboard" | "delete" | null;
+
+export default function App({ startEmpty = false, drilldownEnabled = false }: AppProps) {
   const dash = useDashboards({ startEmpty });
-  const [view, setView] = useState("dashboard");
+  const [view, setView] = useState<View>("dashboard");
   const [navCollapsed, setNavCollapsed] = useState(false);
   const [dashOpen, setDashOpen] = useState(true);
   const [editing, setEditing] = useState(false);
   const [panelOpen, setPanelOpen] = useState(false);
   const [panelDocked, setPanelDocked] = useState(false);
   const [manageOpen, setManageOpen] = useState(false);
-  const [modal, setModal] = useState(null);
-  const [pendingDelete, setPendingDelete] = useState(null);
+  const [modal, setModal] = useState<ModalKind>(null);
+  const [pendingDelete, setPendingDelete] = useState<string | null>(null);
   const [dropActive, setDropActive] = useState(false);
-  const dragTypeRef = useRef(null);
-  const canvasRef = useRef(null);
+  const dragTypeRef = useRef<string | null>(null);
+  const canvasRef = useRef<HTMLDivElement>(null);
 
   const widgets = dash.active ? dash.active.widgets : [];
   const onDashboardView = view === "dashboard";
@@ -42,15 +51,15 @@ export default function App({ startEmpty = false, drilldownEnabled = false }) {
   }, []);
 
   const handleCanvasDrop = useCallback(
-    (e) => {
+    (e: React.DragEvent<HTMLDivElement>) => {
       e.preventDefault();
       const typeId = e.dataTransfer.getData("text/plain") || dragTypeRef.current;
       dragTypeRef.current = null;
       setDropActive(false);
       if (!typeId) return;
       const box = canvasRef.current ? canvasRef.current.getBoundingClientRect() : null;
-      let position = null;
-      if (box) {
+      let position: GridPosition | null = null;
+      if (box && canvasRef.current) {
         const colWidth = (box.width - GRID_MARGIN[0] * (GRID_COLS - 1)) / GRID_COLS;
         const x = Math.max(0, Math.min(GRID_COLS - 4, Math.round((e.clientX - box.left) / (colWidth + GRID_MARGIN[0]))));
         const y = Math.max(0, Math.round((e.clientY - box.top + canvasRef.current.scrollTop) / (GRID_ROW_HEIGHT + GRID_MARGIN[1])));
@@ -61,7 +70,7 @@ export default function App({ startEmpty = false, drilldownEnabled = false }) {
     [dash]
   );
 
-  const crumbs = onDashboardView
+  const crumbs: Crumb[] = onDashboardView
     ? [{ label: "Home" }, { label: "Dashboard" }, { label: dash.active ? dash.active.name : "" }]
     : [
         { label: "Home", onClick: () => setView("dashboard") },
@@ -205,13 +214,13 @@ export default function App({ startEmpty = false, drilldownEnabled = false }) {
 
         {modal === "delete" && (
           <ConfirmDeleteModal
-            dashboardName={(dash.dashboards.find((d) => d.id === pendingDelete) || {}).name || ""}
+            dashboardName={dash.dashboards.find((d) => d.id === pendingDelete)?.name || ""}
             onCancel={() => {
               setModal(null);
               setPendingDelete(null);
             }}
             onConfirm={() => {
-              dash.deleteDashboard(pendingDelete);
+              if (pendingDelete) dash.deleteDashboard(pendingDelete);
               setModal(null);
               setPendingDelete(null);
             }}

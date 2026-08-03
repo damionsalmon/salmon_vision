@@ -1,14 +1,25 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import Icon from "../ui/Icon.jsx";
+import Icon from "../ui/Icon";
+import type { WidgetView } from "../../types";
+
+export interface WidgetMenuProps {
+  anchorRect: DOMRect;
+  views: WidgetView[];
+  activeView: string;
+  onSelectView: (view: string) => void;
+  onRefresh: () => void;
+  onRemove: () => void;
+  onClose: () => void;
+}
 
 /**
  * Widget ellipsis menu: VIEW switcher + data actions.
  * Rendered in a portal and positioned against the trigger so it is never
  * clipped by the widget's own overflow.
  */
-export default function WidgetMenu({ anchorRect, views, activeView, onSelectView, onRefresh, onRemove, onClose }) {
-  const ref = useRef(null);
+export default function WidgetMenu({ anchorRect, views, activeView, onSelectView, onRefresh, onRemove, onClose }: WidgetMenuProps) {
+  const ref = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState({ left: -9999, top: -9999 });
 
   useLayoutEffect(() => {
@@ -22,10 +33,10 @@ export default function WidgetMenu({ anchorRect, views, activeView, onSelectView
   }, [anchorRect]);
 
   useEffect(() => {
-    const onDown = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) onClose();
+    const onDown = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) onClose();
     };
-    const onKey = (e) => {
+    const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("mousedown", onDown);
@@ -44,7 +55,7 @@ export default function WidgetMenu({ anchorRect, views, activeView, onSelectView
     <div
       ref={ref}
       className="sv-menu"
-      style={{ "--menu-left": pos.left + "px", "--menu-top": pos.top + "px" }}
+      style={{ "--menu-left": pos.left + "px", "--menu-top": pos.top + "px" } as React.CSSProperties}
       role="menu"
     >
       {hasViews && (

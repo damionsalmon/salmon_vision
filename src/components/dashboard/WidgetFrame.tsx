@@ -1,7 +1,20 @@
-import React, { forwardRef, memo, useCallback, useRef, useState } from "react";
-import Icon, { GripIcon, KebabIcon } from "../ui/Icon.jsx";
-import WidgetMenu from "./WidgetMenu.jsx";
-import { getWidgetType } from "../../lib/widgetRegistry.js";
+import React, { forwardRef, memo, useCallback, useState } from "react";
+import Icon, { GripIcon, KebabIcon } from "../ui/Icon";
+import WidgetMenu from "./WidgetMenu";
+import { getWidgetType } from "../../lib/widgetRegistry";
+import type { Widget } from "../../types";
+
+export interface WidgetFrameOwnProps {
+  widget: Widget;
+  editing: boolean;
+  active?: boolean;
+  onSetView: (widgetId: string, view: string) => void;
+  onRefresh: (widgetId: string) => void;
+  onRemove: (widgetId: string) => void;
+  onOpenDetail?: (() => void) | null;
+}
+
+export type WidgetFrameProps = WidgetFrameOwnProps & React.HTMLAttributes<HTMLDivElement>;
 
 /**
  * Chrome around a widget body. `active` comes from the grid's virtualization
@@ -24,12 +37,12 @@ function WidgetFrameInner(
     onMouseUp,
     onTouchEnd,
     ...rest
-  },
-  ref
+  }: WidgetFrameProps,
+  ref: React.Ref<HTMLDivElement>
 ) {
   const type = getWidgetType(widget.type);
-  const [menuRect, setMenuRect] = useState(null);
-  const openMenu = useCallback((e) => {
+  const [menuRect, setMenuRect] = useState<DOMRect | null>(null);
+  const openMenu = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setMenuRect(e.currentTarget.getBoundingClientRect());
   }, []);
@@ -51,7 +64,7 @@ function WidgetFrameInner(
         <div className={"sv-widget__head" + (editing ? " sv-widget__drag sv-drag-handle" : "")}>
           <div className="sv-widget__titles">
             <span className="sv-widget__title">{type ? type.title : widget.type}</span>
-            {activeView && activeView.id !== type.defaultView && (
+            {activeView && type && activeView.id !== type.defaultView && (
               <span className="sv-widget__sub">{activeView.label}</span>
             )}
           </div>
@@ -76,7 +89,7 @@ function WidgetFrameInner(
         </div>
 
         <div className="sv-widget__body">
-          {active && Body ? <Body view={widget.view} seed={widget.refreshedAt} title={type.title} /> : null}
+          {active && Body && type ? <Body view={widget.view} seed={widget.refreshedAt} title={type.title} /> : null}
         </div>
       </div>
 

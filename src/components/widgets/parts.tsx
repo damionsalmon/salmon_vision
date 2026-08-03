@@ -1,8 +1,12 @@
 import React from "react";
-import { formatMoney, formatCompact, formatPercent } from "../../data/mockData.js";
-import Icon from "../ui/Icon.jsx";
+import { formatMoney, formatCompact, formatPercent, type Account, type CashPoint } from "../../data/mockData";
+import Icon from "../ui/Icon";
 
-export function TrendPill({ value }) {
+export interface TrendPillProps {
+  value: number;
+}
+
+export function TrendPill({ value }: TrendPillProps) {
   const up = value >= 0;
   return (
     <span className="inline-flex items-center gap-1">
@@ -18,8 +22,21 @@ export function TrendPill({ value }) {
   );
 }
 
+export interface BreakdownRow {
+  key: string;
+  label: string;
+  value: number;
+  currency?: string;
+  share: number;
+}
+
+export interface BreakdownListProps {
+  rows: BreakdownRow[];
+  currency?: string;
+}
+
 /** Ranked bar list — the shared shape behind By currency / By country / By bank. */
-export function BreakdownList({ rows, currency = "EUR" }) {
+export function BreakdownList({ rows, currency = "EUR" }: BreakdownListProps) {
   return (
     <div className="flex flex-col gap-3">
       {rows.map((row) => (
@@ -32,7 +49,7 @@ export function BreakdownList({ rows, currency = "EUR" }) {
             </span>
           </div>
           <div className="sv-bar-track">
-            <div className="sv-bar-fill" style={{ "--fill": Math.max(2, row.share * 100) + "%" }} />
+            <div className="sv-bar-fill" style={{ "--fill": Math.max(2, row.share * 100) + "%" } as React.CSSProperties} />
           </div>
         </div>
       ))}
@@ -40,7 +57,18 @@ export function BreakdownList({ rows, currency = "EUR" }) {
   );
 }
 
-export function TopAccountsList({ rows }) {
+export interface TopAccountRow {
+  id: string;
+  bank: string;
+  account: string;
+  eur: number;
+}
+
+export interface TopAccountsListProps {
+  rows: TopAccountRow[];
+}
+
+export function TopAccountsList({ rows }: TopAccountsListProps) {
   return (
     <div className="flex flex-col">
       {rows.map((row) => (
@@ -62,7 +90,11 @@ export function TopAccountsList({ rows }) {
   );
 }
 
-export function AccountsTable({ rows }) {
+export interface AccountsTableProps {
+  rows: Account[];
+}
+
+export function AccountsTable({ rows }: AccountsTableProps) {
   return (
     <table className="sv-table">
       <thead>
@@ -91,7 +123,12 @@ export function AccountsTable({ rows }) {
   );
 }
 
-export function Sparkline({ series, height = 96 }) {
+export interface SparklineProps {
+  series: CashPoint[];
+  height?: number;
+}
+
+export function Sparkline({ series, height = 96 }: SparklineProps) {
   const values = series.map((p) => p.value);
   const min = Math.min(...values);
   const max = Math.max(...values);
@@ -103,11 +140,7 @@ export function Sparkline({ series, height = 96 }) {
   });
   const path = points.map((p, i) => (i === 0 ? "M" : "L") + p.x + "," + p.y).join(" ");
   return (
-    <svg
-      viewBox={"0 0 100 " + height}
-      preserveAspectRatio="none"
-      className="w-full h-full min-h-[60px] block"
-    >
+    <svg viewBox={"0 0 100 " + height} preserveAspectRatio="none" className="w-full h-full min-h-[60px] block">
       {[0, 1, 2, 3].map((i) => (
         <line
           key={i}
@@ -145,7 +178,11 @@ export function Sparkline({ series, height = 96 }) {
   );
 }
 
-export function BarSeries({ series }) {
+export interface BarSeriesProps {
+  series: CashPoint[];
+}
+
+export function BarSeries({ series }: BarSeriesProps) {
   const max = Math.max(...series.map((p) => p.value));
   return (
     <div className="flex items-end gap-2 h-full min-h-[80px]">
@@ -153,7 +190,7 @@ export function BarSeries({ series }) {
         <div key={p.day} className="flex-1 flex flex-col gap-1.5 items-center">
           <div
             className="sv-bar-series-fill"
-            style={{ "--bar-h": Math.max(4, (p.value / max) * 100) + "%" }}
+            style={{ "--bar-h": Math.max(4, (p.value / max) * 100) + "%" } as React.CSSProperties}
           />
           <span className="text-[10px] text-grey-500">{p.day}</span>
         </div>
