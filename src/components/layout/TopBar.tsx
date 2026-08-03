@@ -18,7 +18,7 @@ export default function TopBar({ crumbs, onToggleNav, onOpenManage, actions }: T
 
       <div className="sv-crumbs">
         {crumbs.map((crumb, i) => (
-          <React.Fragment key={crumb.label}>
+          <React.Fragment key={i}>
             {i > 0 && <Icon name="chevronRight" size={14} color="var(--sa-fg-tertiary)" />}
             {crumb.onClick ? (
               <button type="button" onClick={crumb.onClick} className="text-xs text-grey-500">

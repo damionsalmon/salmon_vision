@@ -157,6 +157,11 @@
   transition: background 150ms ease;
 }
 
+.sv-toggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .sv-toggle--on {
   background: var(--sa-primary-600);
   justify-content: flex-end;

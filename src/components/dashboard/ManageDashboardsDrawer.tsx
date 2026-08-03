@@ -6,14 +6,16 @@ export interface ToggleProps {
   on: boolean;
   onChange: () => void;
   label: string;
+  disabled?: boolean;
 }
 
-function Toggle({ on, onChange, label }: ToggleProps) {
+function Toggle({ on, onChange, label, disabled }: ToggleProps) {
   return (
     <button
       type="button"
       className={"sv-toggle" + (on ? " sv-toggle--on" : "")}
       onClick={onChange}
+      disabled={disabled}
       role="switch"
       aria-checked={on}
       aria-label={label}
@@ -61,7 +63,7 @@ export default function ManageDashboardsDrawer({
           </button>
         </div>
 
-        <div className="flex flex-col gap-5 p-6 overflow-y-auto">
+        <div className="flex flex-col h-full gap-5 p-6 overflow-y-auto">
           <section className="flex flex-col gap-2">
             <span className="text-xs font-semibold tracking-[var(--sa-tracking-lg)] text-grey-500">
               Predefined by Salmon
@@ -72,6 +74,7 @@ export default function ManageDashboardsDrawer({
                   on={homeDashboard.visible}
                   onChange={() => onToggleVisible(homeDashboard.id)}
                   label="Show Home"
+                  // disabled
                 />
                 <span className="text-sm font-medium">{homeDashboard.name}</span>
               </div>

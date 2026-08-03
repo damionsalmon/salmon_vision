@@ -27,6 +27,9 @@ function makeWidget(typeId: string, index = 0): Widget {
 function seedDashboards(startEmpty: boolean): Dashboard[] {
   const overviewTypes = startEmpty ? [] : ["currentCash", "cashOverTime", "balanceByCurrency"];
   return [
+    // Home is the permanent default tab — always visible, never deletable
+    // (enforced in toggleVisible/deleteDashboard below), guaranteeing the
+    // tab bar can never end up with zero tabs.
     { id: "home", name: "Home", predefined: true, visible: true, widgets: overviewTypes.map((t, i) => makeWidget(t, i)) },
     { id: "overview", name: "Overview", visible: true, widgets: [] }
   ];
@@ -67,10 +70,10 @@ export interface UseDashboardsResult {
 /** Single source of truth for dashboards, their widgets, layout and view state. */
 export default function useDashboards({ startEmpty = false }: UseDashboardsOptions = {}): UseDashboardsResult {
   const [dashboards, setDashboards] = useState<Dashboard[]>(() => seedDashboards(startEmpty));
-  const [activeId, setActiveId] = useState("overview");
+  const [activeId, setActiveId] = useState("home");
 
   const active = useMemo(
-    () => dashboards.find((d) => d.id === activeId) || dashboards.find((d) => !d.predefined && d.visible) || null,
+    () => dashboards.find((d) => d.id === activeId) || dashboards.find((d) => d.visible) || null,
     [dashboards, activeId]
   );
 
@@ -157,11 +160,15 @@ export default function useDashboards({ startEmpty = false }: UseDashboardsOptio
 
   const toggleVisible = useCallback((id: string) => {
     setDashboards((prev) => {
+      const target = prev.find((d) => d.id === id);
+      // Predefined dashboards (Home) must always stay visible — they're the
+      // guaranteed tab, so hiding them could leave zero tabs.
+      if (!target || target.predefined) return prev;
       const next = prev.map((d) => (d.id === id ? { ...d, visible: !d.visible } : d));
       setActiveId((current) => {
         const dash = next.find((d) => d.id === current);
-        if (dash && dash.visible && !dash.predefined) return current;
-        const first = next.find((d) => !d.predefined && d.visible);
+        if (dash && dash.visible) return current;
+        const first = next.find((d) => d.visible);
         return first ? first.id : current;
       });
       return next;
@@ -170,17 +177,20 @@ export default function useDashboards({ startEmpty = false }: UseDashboardsOptio
 
   const deleteDashboard = useCallback((id: string) => {
     setDashboards((prev) => {
+      const target = prev.find((d) => d.id === id);
+      // Predefined dashboards (Home) can't be deleted.
+      if (!target || target.predefined) return prev;
       const next = prev.filter((d) => d.id !== id);
       setActiveId((current) => {
         if (current !== id) return current;
-        const first = next.find((d) => !d.predefined && d.visible);
+        const first = next.find((d) => d.visible);
         return first ? first.id : "home";
       });
       return next;
     });
   }, []);
 
-  const visibleDashboards = useMemo(() => dashboards.filter((d) => !d.predefined && d.visible), [dashboards]);
+  const visibleDashboards = useMemo(() => dashboards.filter((d) => d.visible), [dashboards]);
 
   const userDashboards = useMemo(() => dashboards.filter((d) => !d.predefined), [dashboards]);
 

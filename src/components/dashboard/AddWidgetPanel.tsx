@@ -75,14 +75,11 @@ export default function AddWidgetPanel({ docked, onToggleDock, onClose, onApply,
 
       <div className="flex flex-col gap-1.5 p-2 rounded-md bg-grey-25">
         <div className="relative flex items-center">
-          <span className="absolute left-3 flex">
-            <Icon name="search" size={14} color="var(--sa-fg-tertiary)" />
-          </span>
           <input
             className="sv-field pl-[34px]"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search widgets"
+            placeholder="..."
           />
         </div>
         <span className="text-xs text-grey-500">Search the list of available widgets.</span>
